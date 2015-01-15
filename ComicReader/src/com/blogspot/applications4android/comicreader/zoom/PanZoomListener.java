@@ -200,8 +200,8 @@ public class PanZoomListener implements OnTouchListener {
 		else {
 			text.setVisibility(View.INVISIBLE);
 		}
-		Button fav = (Button) mCtrls.findViewById(R.id.strip_favorite);
-		if(mComicAct.isCurrentFavorite()) {
+		Button fav = (Button) mCtrls.findViewById(R.id.strip_bookmark);
+		if(mComicAct.isCurrentBookmarked()) {
 			fav.setBackgroundDrawable(mComicAct.getResources().getDrawable(R.drawable.star_fav));
 		}
 		else {

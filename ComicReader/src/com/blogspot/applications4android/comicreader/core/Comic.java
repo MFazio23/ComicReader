@@ -60,6 +60,8 @@ public abstract class Comic extends ComicParser {
 	public static final int NAV_CURRENT = 17;
 	/** navigate to previous session */
 	public static final int NAV_PREV_SESSION = 18;
+	/** navigate to bookmarked strip */
+	public static final int NAV_BOOKMARKED = 19;
 
 	/** use date picker dialog */
 	public static final int DIALOG_DATE = 51;
@@ -90,6 +92,8 @@ public abstract class Comic extends ComicParser {
 	private Strip mCurrent;
 	/** launch type */
 	private int mType;
+    /** bookmarked comic URL; used as an ID */
+    private String mBookmarkedComicUID;
 	/** favorites array */
 	private ArrayList<String> mFavs;
 	/** unread array */
@@ -115,6 +119,7 @@ public abstract class Comic extends ComicParser {
 		mDefZoom = 1.0f;
 		mStrips = new HashMap<String, Strip>();
 		mType = TYPE_LATEST;
+        mBookmarkedComicUID = "";
 		mFavs = new ArrayList<String>();
 		mUnr = new ArrayList<String>();
 		mFavIdx = new int[] {0};
@@ -260,6 +265,11 @@ public abstract class Comic extends ComicParser {
 				}
 			}
 		}
+
+        if (root.has("mBookmarkedComicUID")) {
+            mBookmarkedComicUID = root.getString("mBookmarkedComicUID");
+        }
+
 		Log.d(TAG, "Successfully read comic properties ...");
 	}
 
@@ -339,6 +349,9 @@ public abstract class Comic extends ComicParser {
 			if (mPrevSessionUid != null) {
 				sb.append("\"mPrevSessionUid\":\"" + mPrevSessionUid + "\",\n");
 			}
+            if (mBookmarkedComicUID != null) {
+                sb.append("\"mBookmarkedComicUID\":\"").append(mBookmarkedComicUID).append("\",\n");
+            }
 			sb.append("\"mDefZoom\":\"" + mDefZoom + "\",\n");
 			sb.append("\"mStrips\": [\n");
 			Iterator<Entry<String, Strip>> itr = mStrips.entrySet().iterator();
@@ -402,6 +415,16 @@ public abstract class Comic extends ComicParser {
 			}
 		}
 	}
+
+    public void setCurrentAsBookmarked(final boolean bookmarked) {
+        if(mCurrent != null) {
+            if(bookmarked) {
+                mBookmarkedComicUID = mCurrent.uid();
+            } else {
+                mBookmarkedComicUID = this.getLatestStripUrl();
+            }
+        }
+    }
 	
 	/**
 	 * Whether the current comic is favorite or not
@@ -415,6 +438,9 @@ public abstract class Comic extends ComicParser {
 		return mCurrent.isFavorite();
 	}
 
+    public boolean isCurrentBookmarked() {
+        return mCurrent != null && mBookmarkedComicUID.equals(mCurrent.uid());
+    }
 
 	/**
 	 * Whether the current comic has image text or not
@@ -494,6 +520,8 @@ public abstract class Comic extends ComicParser {
 			return mCurrent;
 		case NAV_PREV_SESSION:
 			return getPreviousSessionStrip();
+        case NAV_BOOKMARKED:
+            return this.getBookmarkedStrip();
 		default:
 			ComicException ce = new ComicException("Bad navigation-type passed: " + type);
 			throw ce;
@@ -591,6 +619,14 @@ public abstract class Comic extends ComicParser {
 		}
 		return _querySetCurrentUid(mPrevSessionUid);
 	}
+
+    public Strip getBookmarkedStrip() {
+        if (mBookmarkedComicUID == null) {
+            return null;
+        }
+
+        return _querySetCurrentUid(mBookmarkedComicUID);
+    }
 
 	/**
 	 * Gets the strip from the given url

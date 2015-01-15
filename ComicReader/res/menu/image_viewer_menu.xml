@@ -10,6 +10,9 @@
 		android:id="@+id/comic_latest"
 		android:title="Latest" />
 	<item
+		android:id="@+id/comic_bookmarked"
+		android:title="Bookmarked" />
+	<item
 		android:id="@+id/comic_select"
 		android:title="Select Strip" />
     <item

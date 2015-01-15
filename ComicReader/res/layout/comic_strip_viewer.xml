@@ -28,42 +28,42 @@
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:background="@drawable/left"
-    		android:id="@+id/strip_prev" />
+    		android:id="@+id/strip_prev" android:layout_weight="1"/>
  	   	<Button
     		android:layout_marginRight="2dp"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:background="@drawable/text"
-    		android:id="@+id/image_text" />
+    		android:id="@+id/image_text" android:layout_weight="1"/>
     	<Button
-    		android:layout_marginRight="2dp"	
+    		android:layout_marginRight="2dp"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:id="@+id/strip_favorite"
+    		android:id="@+id/strip_bookmark"
     		android:background="@drawable/star_nonfav"
-    		android:text=" " />
+            android:layout_weight="1"/>
     	<Button
     		android:layout_marginRight="2dp"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:id="@+id/strip_share"
-    		android:background="@drawable/share" />
+    		android:background="@drawable/share" android:layout_weight="1"/>
 	    <Button
 	        android:layout_marginRight="2dp"
     	    android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:id="@+id/zoom_out_button"
-	        android:background="@drawable/minus" />
+	        android:background="@drawable/minus" android:layout_weight="1"/>
 	    <Button
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:id="@+id/zoom_in_button"
-	        android:background="@drawable/plus" />
+	        android:background="@drawable/plus" android:layout_weight="1"/>
  	   	<Button
     		android:layout_marginRight="2dp"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:background="@drawable/right"
-    		android:id="@+id/strip_next" />
+    		android:id="@+id/strip_next" android:layout_weight="1"/>
 	</LinearLayout>
 </RelativeLayout>

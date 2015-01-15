@@ -154,6 +154,10 @@ public class ComicStripViewer extends ComicActivity {
 		return curr.isFavorite();
 	}
 
+    public boolean isCurrentBookmarked() {
+        return mComic != null && mComic.isCurrentBookmarked();
+    }
+
     /**
      * Set the next comic in the list
      * @throws IOException 
@@ -306,18 +310,18 @@ public class ComicStripViewer extends ComicActivity {
 	            alertbox.show();
 			}
 		});
-    	Button fav = (Button) findViewById(R.id.strip_favorite);
+    	Button fav = (Button) findViewById(R.id.strip_bookmark);
     	fav.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
 				mPzl.resetChangeVisibility();
 				Button b = (Button) arg0;
 				int id;
-				if(mComic.isCurrentFavorite()) {
-					mComic.setCurrentAsFavorite(false);
+				if(mComic.isCurrentBookmarked()) {
+					mComic.setCurrentAsBookmarked(false);
 					id = R.drawable.star_nonfav;
 				}
 				else {
-					mComic.setCurrentAsFavorite(true);
+					mComic.setCurrentAsBookmarked(true);
 					id = R.drawable.star_fav;
 				}
 				b.setBackgroundDrawable(getResources().getDrawable(id));
@@ -434,6 +438,9 @@ public class ComicStripViewer extends ComicActivity {
 	    	case R.id.comic_latest:
 	    		displayStrip(Comic.NAV_LATEST);
 	    		return true;
+            case R.id.comic_bookmarked:
+                displayStrip(Comic.NAV_BOOKMARKED);
+                return true;
 	    	case R.id.comic_rand:
 	    		displayStrip(Comic.NAV_RANDOM);
 	    		return true;
