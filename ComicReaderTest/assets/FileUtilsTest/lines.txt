@@ -1,6 +1,0 @@
-This is
-a 
-simple
-file
-containing
-6 lines
